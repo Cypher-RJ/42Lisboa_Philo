@@ -32,3 +32,40 @@ int	atoi_positive_limited(const char *str, const char *arg_name, int max)
 	}
 	return ((int)result);
 }
+
+long long	timestamp(void)
+{
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000LL + tv.tv_usec / 1000);
+}
+
+void precise_sleep(long long ms, t_philo *philo)
+{
+	long long start;
+	
+	start = timestamp();
+	while (!philo->data->dead)
+	{
+		if (timestamp() - start >= ms)
+			break;
+		usleep(200);
+	}
+}
+
+int is_dead(t_data *data)
+{
+	int dead;
+	pthread_mutex_lock(&data->dead_mutex);
+	dead = data->dead;
+	pthread_mutex_unlock(&data->dead_mutex);
+	return dead;
+}
+
+void set_dead(t_data *data)
+{
+	pthread_mutex_lock(&data->dead_mutex);
+	data->dead = 1;
+	pthread_mutex_unlock(&data->dead_mutex);
+}
