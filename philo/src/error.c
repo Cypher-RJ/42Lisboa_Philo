@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rcesar-d <rcesar-d@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/04 13:26:41 by rcesar-d          #+#    #+#             */
+/*   Updated: 2025/07/04 13:26:42 by rcesar-d         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/philo.h"
 
 int	arg_error(const char *arg_name, const char *msg)
@@ -6,10 +18,11 @@ int	arg_error(const char *arg_name, const char *msg)
 	return (-1);
 }
 
-void destroy_all(t_data *data)
+void	destroy_all(t_data *data)
 {
-	int i = 0;
+	int	i;
 
+	i = 0;
 	while (i < data->philo_count)
 	{
 		pthread_mutex_destroy(&data->forks[i]);

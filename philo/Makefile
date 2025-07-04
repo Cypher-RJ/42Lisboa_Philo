@@ -8,6 +8,10 @@ SRCS =	src/error.c \
 		src/sim.c \
 		src/syntax.c \
 		src/utils.c \
+		src/actions.c \
+		src/sim_utils.c \
+		src/routine.c \
+		src/actions_utils.c \
 
 OBJS = $(patsubst src/%.c,obj/%.o,$(SRCS))
 

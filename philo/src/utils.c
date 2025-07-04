@@ -1,9 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rcesar-d <rcesar-d@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/04 13:27:06 by rcesar-d          #+#    #+#             */
+/*   Updated: 2025/07/04 15:17:00 by rcesar-d         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/philo.h"
+
+static int	ft_strcmp(const char *instr, const char *comparing)
+{
+	int	i;
+
+	i = 0;
+	while (instr[i] == comparing[i] && instr[i])
+		i++;
+	return (instr[i] - comparing[i]);
+}
 
 int	is_valid_digit_str(const char *str)
 {
-	int i = 0;
+	int	i;
 
+	i = 0;
 	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')
@@ -13,14 +36,13 @@ int	is_valid_digit_str(const char *str)
 	return (i > 0);
 }
 
-int	atoi_positive_limited(const char *str, const char *arg_name, int max)
+int	atoi_positive_lda(const char *str, const char *arg_name, int max)
 {
 	long long	result;
 	int			i;
 
 	if (!is_valid_digit_str(str))
 		return (arg_error(arg_name, "must be a positive integer"));
-
 	result = 0;
 	i = 0;
 	while (str[i])
@@ -30,42 +52,7 @@ int	atoi_positive_limited(const char *str, const char *arg_name, int max)
 			return (arg_error(arg_name, "is too large"));
 		i++;
 	}
+	if (ft_strcmp(arg_name, "number_of_philosophers") == 0 && result == 0)
+		return (arg_error(arg_name, "must not be 0"));
 	return ((int)result);
-}
-
-long long	timestamp(void)
-{
-	struct timeval	tv;
-
-	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1000LL + tv.tv_usec / 1000);
-}
-
-void precise_sleep(long long ms, t_philo *philo)
-{
-	long long start;
-	
-	start = timestamp();
-	while (!philo->data->dead)
-	{
-		if (timestamp() - start >= ms)
-			break;
-		usleep(200);
-	}
-}
-
-int is_dead(t_data *data)
-{
-	int dead;
-	pthread_mutex_lock(&data->dead_mutex);
-	dead = data->dead;
-	pthread_mutex_unlock(&data->dead_mutex);
-	return dead;
-}
-
-void set_dead(t_data *data)
-{
-	pthread_mutex_lock(&data->dead_mutex);
-	data->dead = 1;
-	pthread_mutex_unlock(&data->dead_mutex);
 }
