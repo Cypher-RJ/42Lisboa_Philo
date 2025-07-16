@@ -6,7 +6,7 @@
 /*   By: rcesar-d <rcesar-d@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 13:26:50 by rcesar-d          #+#    #+#             */
-/*   Updated: 2025/07/04 13:51:23 by rcesar-d         ###   ########.fr       */
+/*   Updated: 2025/07/16 13:39:01 by rcesar-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	*monitor_routine(void *arg)
 			set_dead(data);
 			return (NULL);
 		}
-		usleep(100);
+		usleep(10);
 	}
 	return (NULL);
 }

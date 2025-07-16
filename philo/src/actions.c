@@ -6,7 +6,7 @@
 /*   By: rcesar-d <rcesar-d@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 13:26:38 by rcesar-d          #+#    #+#             */
-/*   Updated: 2025/07/04 13:26:39 by rcesar-d         ###   ########.fr       */
+/*   Updated: 2025/07/16 12:08:33 by rcesar-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ static void	print_eat(t_philo *philo)
 	t_data	*data;
 
 	data = philo->data;
+	if (is_dead(data))
+		return ;
 	printf("%lld %d has taken a fork\n",
 		timestamp() - data->start_time, philo->id);
 	printf("%lld %d has taken a fork\n",
@@ -58,14 +60,14 @@ void	philo_eat(t_philo *philo)
 		unlock_forks(philo);
 		return ;
 	}
-	pthread_mutex_lock(&data->print);
-	if (!is_dead(data))
-		print_eat(philo);
-	pthread_mutex_unlock(&data->print);
 	pthread_mutex_lock(&philo->meal_mutex);
 	philo->last_meal = timestamp();
 	philo->meals++;
 	pthread_mutex_unlock(&philo->meal_mutex);
+	pthread_mutex_lock(&data->print);
+	if (!is_dead(data))
+		print_eat(philo);
+	pthread_mutex_unlock(&data->print);
 	precise_sleep(data->time_to_eat, philo);
 	unlock_forks(philo);
 }

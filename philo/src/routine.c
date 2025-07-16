@@ -6,7 +6,7 @@
 /*   By: rcesar-d <rcesar-d@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 13:26:53 by rcesar-d          #+#    #+#             */
-/*   Updated: 2025/07/04 13:26:54 by rcesar-d         ###   ########.fr       */
+/*   Updated: 2025/07/16 14:02:06 by rcesar-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,13 @@ static void	routine_solo(t_philo *philo)
 	t_data	*data;
 
 	data = philo->data;
+	if (is_dead(data))
+		return ;
 	pthread_mutex_lock(philo->left_fork);
 	pthread_mutex_lock(&data->print);
-	printf("%lld %d has taken a fork\n",
-		timestamp() - data->start_time, philo->id);
+	if (!is_dead(data))
+		printf("%lld %d has taken a fork\n",
+			timestamp() - data->start_time, philo->id);
 	pthread_mutex_unlock(&data->print);
 	precise_sleep(data->time_to_die, philo);
 	pthread_mutex_unlock(philo->left_fork);
@@ -46,6 +49,8 @@ static void	routine_loop(t_philo *philo)
 		if (is_dead(data))
 			break ;
 		philo_think(philo);
+		if (is_dead(data))
+			break ;
 	}
 }
 

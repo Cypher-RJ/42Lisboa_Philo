@@ -6,7 +6,7 @@
 /*   By: rcesar-d <rcesar-d@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 13:26:58 by rcesar-d          #+#    #+#             */
-/*   Updated: 2025/07/04 16:02:13 by rcesar-d         ###   ########.fr       */
+/*   Updated: 2025/07/16 14:09:41 by rcesar-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,18 @@ long long	timestamp(void)
 void	precise_sleep(long long ms, t_philo *philo)
 {
 	long long	start;
+	long long	elapsed;
 
 	start = timestamp();
 	while (!is_dead(philo->data))
 	{
-		if (timestamp() - start >= ms)
+		elapsed = timestamp() - start;
+		if (elapsed >= ms)
 			break ;
-		usleep(10);
+		if (ms - elapsed > 50)
+			usleep(50);
+		else
+			usleep(10);
 	}
 }
 
