@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cypher <rcesar-d@student.42lisboa.com>     +#+  +:+       +#+        */
+/*   By: rcesar-d <rcesar-d@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 13:26:32 by rcesar-d          #+#    #+#             */
-/*   Updated: 2025/07/24 12:44:23 by cypher           ###   ########.fr       */
+/*   Updated: 2025/07/24 18:58:29 by rcesar-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	philo_think(t_philo *philo)
 		printf("%lld %d is thinking\n",
 			timestamp() - data->start_time, philo->id);
 	pthread_mutex_unlock(&data->print);
-	if (data->philo_count % 2 == 1)
+	if (data->philo_count % 2 != 0)
 	{
 		think_time = (data->time_to_eat * 2) - data->time_to_sleep;
 		if (think_time > 0 && think_time < data->time_to_die
